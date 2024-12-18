@@ -12,10 +12,6 @@ import com.amazonaws.auth.{
   InstanceProfileCredentialsProvider => InstanceProfileCredentialsProviderV1,
   SystemPropertiesCredentialsProvider => SystemPropertiesCredentialsProviderV1
 }
-import com.amazonaws.services.sns.{
-  AmazonSNSAsync,
-  AmazonSNSAsyncClientBuilder => AmazonSNSAsyncClientBuilderV1
-}
 import com.typesafe.config.{Config => TypesafeConfig}
 import controllers.Logging
 import org.joda.time.DateTime
@@ -31,6 +27,7 @@ import software.amazon.awssdk.services.sts.StsClient
 import utils.{DateFormats, UnnaturalOrdering}
 import riffraff.BuildInfo
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
+import software.amazon.awssdk.services.sns.SnsAsyncClient
 import software.amazon.awssdk.services.ssm.SsmClient
 
 import scala.jdk.CollectionConverters._
@@ -318,13 +315,12 @@ class Config(configuration: TypesafeConfig, startTime: DateTime)
       getStringOpt("anghammarad.region").getOrElse(defaultRegion)
     lazy val topicArn: String = getString("anghammarad.topic.arn")
 
-    // For compatibility reasons this need to use the old AWS SDK
-    // TODO use V2 client once Anghammarad supports it
-    lazy val snsClient: AmazonSNSAsync = AmazonSNSAsyncClientBuilderV1
-      .standard()
-      .withCredentials(legacyCredentialsProviderChain(None, None))
-      .withRegion(regionName)
-      .build()
+    val snsClient: SnsAsyncClient =
+      SnsAsyncClient
+        .builder()
+        .region(AWSRegion.of(regionName))
+        .credentialsProvider(credentialsProviderChain(None, None))
+        .build()
   }
 
   /** Credentials for use with V1 of the AWS SDK. Considered legacy as, where

@@ -6,7 +6,7 @@ object Dependencies {
   object Versions {
     val aws = "2.29.21"
     val jackson = "2.17.2"
-    val awsRds = "1.12.779"
+    val awsRds = "1.12.780"
     val enumeratumPlay = "1.8.1"
   }
 
@@ -45,7 +45,7 @@ object Dependencies {
       "software.amazon.awssdk" % "cloudformation" % Versions.aws,
       "software.amazon.awssdk" % "sts" % Versions.aws,
       "software.amazon.awssdk" % "ssm" % Versions.aws,
-      "com.gu" %% "fastly-api-client" % "0.6.0",
+      "com.gu" %% "fastly-api-client" % "1.0.0",
       "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % Versions.jackson,
       "com.beachape" %% "enumeratum-play-json" % Versions.enumeratumPlay,
       "com.google.apis" % "google-api-services-deploymentmanager" % "v2-rev20241031-2.0.0",
@@ -74,7 +74,7 @@ object Dependencies {
       "software.amazon.awssdk" % "dynamodb" % Versions.aws,
       "software.amazon.awssdk" % "sns" % Versions.aws,
       "org.quartz-scheduler" % "quartz" % "2.3.2",
-      "com.gu" %% "anghammarad-client" % "3.0.0",
+      "com.gu" %% "anghammarad-client" % "4.0.0",
       "org.webjars" %% "webjars-play" % "3.0.1",
       "org.webjars" % "jquery" % "3.7.1",
       "org.webjars" % "jquery-ui" % "1.13.3",
